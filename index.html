@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal de Parceiros - MQS</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Portal de Parceiros - Mais Que Seguros</h1>
+
+  <div class="container">
+    <form id="formSimulacao">
+      <h2>Pedido de Simulação</h2>
+      <input type="text" name="parceiro" placeholder="Nome do Parceiro" required>
+      <input type="text" name="ramo" placeholder="Ramo (ex: Automóvel, Habitação...)" required>
+      <textarea name="detalhes" placeholder="Detalhes da simulação" required></textarea>
+      <button type="submit">Enviar Pedido</button>
+    </form>
+
+    <form id="formTarefa">
+      <h2>Outros Pedidos / Tarefas</h2>
+      <input type="text" name="parceiro" placeholder="Nome do Parceiro" required>
+      <textarea name="descricao" placeholder="Descreva o pedido" required></textarea>
+      <button type="submit">Enviar Pedido</button>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
