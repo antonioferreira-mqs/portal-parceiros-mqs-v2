@@ -3,71 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portal de Parceiros - Mais Que Seguros</title>
+  <title>Portal de Parceiros — Mais Que Seguros</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="icon" type="image/svg+xml" href="logo-mqs-favicon.svg" />
-  <meta name="theme-color" content="#0D6B3B" />
-
+  <!-- Paleta e estilo -->
   <link rel="stylesheet" href="style.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="logo-mqs-favicon.svg" />
+
+  <!-- Fonte -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
-
-  <!-- Header -->
   <header class="site-header">
     <div class="brand">
       <img class="brand_logo" src="logo-mqs.svg" alt="Mais Que Seguros" />
-      <div class="brand_text">
+      <div>
         <h1 class="brand_title">Portal de Parceiros</h1>
         <p class="brand_subtitle">Mais Que Seguros</p>
       </div>
     </div>
-
     <div class="partner-status" id="partnerStatus" hidden>
-      <span class="partner-badge" id="partnerEmailBadge"></span>
+      <span id="partnerEmailBadge"></span>
       <button id="logoutBtn" class="btn btn-ghost">Sair</button>
     </div>
   </header>
 
-  <!-- Main Container -->
   <main class="container">
-    <!-- LOGIN VIEW -->
-    <section class="card view" id="view-login">
-      <h2 class="card_head">Autenticação de Parceiros</h2>
+    <!-- Login -->
+    <section class="card view" id="view-login" aria-labelledby="loginTitulo">
+      <h2 id="loginTitulo">Autenticação de Parceiros</h2>
       <p>Insere o teu e-mail de parceiro para receber o código de acesso:</p>
-      <form id="loginForm">
-        <label for="email">E-mail profissional:</label>
-        <input type="email" id="email" required placeholder="exemplo@empresa.pt" />
-        <button type="submit" class="btn">Enviar código de acesso</button>
-      </form>
+      <label for="partnerEmail">E-mail profissional:</label>
+      <input type="email" id="partnerEmail" placeholder="teu.email@maisqueseguros.pt" />
+      <button id="sendOtpBtn" class="btn btn-primary">Enviar código de acesso</button>
     </section>
 
-    <!-- OTP VIEW -->
-    <section class="card view hidden" id="view-otp">
-      <h2 class="card_head">Código de Validação</h2>
-      <p>Insere o código que recebeste no e-mail:</p>
-      <form id="otpForm">
-        <label for="otp">Código:</label>
-        <input type="text" id="otp" required maxlength="6" placeholder="000000" />
-        <button type="submit" class="btn">Validar</button>
-      </form>
+    <!-- Código OTP -->
+    <section class="card view" id="view-otp" hidden aria-labelledby="otpTitulo">
+      <h2 id="otpTitulo">Confirmação do código</h2>
+      <p>Insere o código que recebeste por e-mail:</p>
+      <input type="text" id="otpCode" maxlength="6" placeholder="Ex: 842193" />
+      <button id="validateOtpBtn" class="btn btn-primary">Validar código</button>
+      <button id="backToLoginBtn" class="btn btn-ghost">Voltar</button>
     </section>
 
-    <!-- HOME VIEW -->
-    <section class="card view hidden" id="view-home">
-      <h2 class="card_head">Bem-vindo ao Portal de Parceiros MQS</h2>
-      <p>Escolhe o tipo de pedido que desejas realizar:</p>
-      <div class="actions">
-        <button class="btn btn-outline" id="newOrder">Novo Pedido</button>
-        <button class="btn btn-outline" id="simulacao">Simulação</button>
-      </div>
+    <!-- Home -->
+    <section class="card view" id="view-home" hidden>
+      <h2>Bem-vindo ao Portal de Parceiros MQS 👋</h2>
+      <p>Escolhe uma das opções abaixo para continuar:</p>
+      <ul class="menu">
+        <li><a href="#">📄 Submeter simulação</a></li>
+        <li><a href="#">📑 Consultar histórico</a></li>
+        <li><a href="#">💬 Apoio técnico</a></li>
+      </ul>
     </section>
   </main>
 
-  <!-- Toast -->
-  <div id="toast" class="toast"></div>
+  <div id="toast"></div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
