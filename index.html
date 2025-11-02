@@ -8,16 +8,14 @@
   <!-- Tipografia -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
 
-  <!-- Favicon (ficheiro centrado) -->
+  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="logo-mqs-favicon.svg" />
-  <link rel="alternate icon" href="logo-mqs-favicon.svg" />
   <meta name="theme-color" content="#0D6B3B" />
 
-  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Header / Brand -->
+  <!-- Header -->
   <header class="site-header">
     <div class="brand">
       <img class="brand__logo" src="logo-mqs.svg" alt="Mais Que Seguros" />
@@ -25,12 +23,50 @@
         <h1 class="brand__title">Portal de Parceiros</h1>
         <p class="brand__subtitle">Mais Que Seguros</p>
       </div>
+
+      <div class="partner-status" id="partnerStatus" hidden>
+        <span class="partner-badge" id="partnerEmailBadge"></span>
+        <button id="logoutBtn" class="btn btn-ghost">Sair</button>
+      </div>
     </div>
   </header>
 
-  <!-- Conteúdo -->
   <main class="container">
-    <!-- CARD – Pedido de Simulação: Automóvel -->
+
+    <!-- LOGIN -->
+    <section class="card" id="loginCard" aria-labelledby="loginTitulo">
+      <div class="card-head">
+        <span class="pill">Acesso</span>
+        <h3 id="loginTitulo">Login de Parceiro</h3>
+        <p class="helper">Insere o teu email. Enviaremos um código de validação.</p>
+      </div>
+
+      <form id="loginForm" class="form" novalidate>
+        <label class="input">
+          <span>Email</span>
+          <input type="email" id="loginEmail" placeholder="parceiro@empresa.pt" required />
+        </label>
+
+        <div class="grid grid-2">
+          <button type="button" id="sendCodeBtn" class="btn btn-primary">
+            <span class="btn__label">Enviar código</span>
+            <span class="btn__spinner" aria-hidden="true"></span>
+          </button>
+
+          <label class="input">
+            <span>Código (6 dígitos)</span>
+            <input type="text" id="loginCode" inputmode="numeric" maxlength="6" placeholder="••••••" />
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          <span class="btn__label">Validar e entrar</span>
+          <span class="btn__spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+    </section>
+
+    <!-- AUTOMÓVEL -->
     <section class="card" aria-labelledby="auto-titulo">
       <div class="card-head">
         <span class="pill">Ramo: Automóvel</span>
@@ -39,11 +75,13 @@
       </div>
 
       <form id="formAuto" class="form" novalidate>
-        <!-- Contacto do parceiro para confirmação -->
+        <!-- Email do Parceiro (preenchido via login) -->
         <label class="input">
-          <span>Email do Parceiro (para confirmação)</span>
-          <input type="email" name="auto_email" id="auto_email" placeholder="ex.: parceiro@empresa.pt" required />
+          <span>Email do Parceiro (confirmação)</span>
+          <input type="email" name="auto_email" id="auto_email" placeholder="parceiro@empresa.pt" required />
         </label>
+
+        <div class="divider"></div>
 
         <div class="grid grid-2">
           <label class="input">
@@ -66,12 +104,12 @@
         <div class="grid grid-2">
           <label class="input">
             <span>Data de Nascimento</span>
-            <input type="date" name="auto_dn" id="auto_dn" required />
+            <input type="text" class="date-input" name="auto_dn" id="auto_dn" placeholder="dd/mm/aaaa" required />
           </label>
 
           <label class="input">
             <span>Data da Carta de Condução</span>
-            <input type="date" name="auto_dcarta" id="auto_dcarta" required />
+            <input type="text" class="date-input" name="auto_dcarta" id="auto_dcarta" placeholder="dd/mm/aaaa" required />
           </label>
         </div>
 
@@ -89,7 +127,6 @@
           </div>
         </fieldset>
 
-        <!-- Grupo Condutor Habitual (aparece se NÃO) -->
         <div id="auto_condutorGrupo" class="reveal" hidden>
           <div class="grid grid-2">
             <label class="input">
@@ -105,11 +142,11 @@
           <div class="grid grid-2">
             <label class="input">
               <span>Data de Nascimento (Condutor Habitual)</span>
-              <input type="date" name="auto_ch_dn" id="auto_ch_dn" />
+              <input type="text" class="date-input" name="auto_ch_dn" id="auto_ch_dn" placeholder="dd/mm/aaaa" />
             </label>
             <label class="input">
               <span>Data da Carta (Condutor Habitual)</span>
-              <input type="date" name="auto_ch_dcarta" id="auto_ch_dcarta" />
+              <input type="text" class="date-input" name="auto_ch_dcarta" id="auto_ch_dcarta" placeholder="dd/mm/aaaa" />
             </label>
           </div>
         </div>
@@ -130,13 +167,12 @@
           <legend>Coberturas Pretendidas (pode escolher várias)</legend>
           <div class="options options--wrap">
             <label class="option"><input type="checkbox" name="auto_coberturas" value="RC" /> <span>RC</span></label>
-            <label class="option"><input type="checkbox" name="auto_coberturas" value="RC+QIV" /> <span>RC + Quebra Isolada de Vidros</span></label>
+            <label class="option"><input type="checkbox" name="auto_coberturas" value="RC+QIV" /> <span>RC + QIV</span></label>
             <label class="option"><input type="checkbox" name="auto_coberturas" value="RC+QIV+Roubo" /> <span>RC + QIV + Roubo</span></label>
             <label class="option"><input type="checkbox" name="auto_coberturas" value="Danos Próprios" id="auto_dp" /> <span>Danos Próprios</span></label>
           </div>
         </fieldset>
 
-        <!-- Campos extra quando Danos Próprios -->
         <div id="auto_dpGrupo" class="reveal" hidden>
           <div class="grid grid-2">
             <label class="input">
@@ -160,7 +196,8 @@
           <input type="text" name="auto_premioRef" id="auto_premioRef" placeholder="Ex.: 357 €/anual" />
         </label>
 
-        <!-- Consentimento e envio -->
+        <div class="divider"></div>
+
         <label class="checkbox-consent">
           <input type="checkbox" id="auto_consent" required />
           <span>Concordo com o tratamento dos dados para efeitos de simulação e contacto.</span>
@@ -172,14 +209,10 @@
         </button>
       </form>
     </section>
-
-    <!-- Poderás adicionar aqui mais cards para outros ramos, seguindo o mesmo padrão -->
   </main>
 
-  <!-- Toast -->
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
-  <!-- JS -->
   <script src="script.js"></script>
 </body>
 </html>
