@@ -3,64 +3,39 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portal de Parceiros — Mais Que Seguros</title>
-
-  <!-- Paleta e estilo -->
-  <link rel="stylesheet" href="style.css" />
-
-  <!-- Favicon -->
+  <title>Portal de Parceiros – Mais Que Seguros</title>
   <link rel="icon" type="image/svg+xml" href="logo-mqs-favicon.svg" />
-
-  <!-- Fonte -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <header class="site-header">
-    <div class="brand">
+    <div class="brand-centered">
       <img class="brand_logo" src="logo-mqs.svg" alt="Mais Que Seguros" />
-      <div>
-        <h1 class="brand_title">Portal de Parceiros</h1>
-        <p class="brand_subtitle">Mais Que Seguros</p>
-      </div>
-    </div>
-    <div class="partner-status" id="partnerStatus" hidden>
-      <span id="partnerEmailBadge"></span>
-      <button id="logoutBtn" class="btn btn-ghost">Sair</button>
+      <h1 class="brand_title">Portal de Parceiros</h1>
+      <p class="brand_subtitle">Mais Que Seguros</p>
     </div>
   </header>
 
   <main class="container">
-    <!-- Login -->
-    <section class="card view" id="view-login" aria-labelledby="loginTitulo">
-      <h2 id="loginTitulo">Autenticação de Parceiros</h2>
+    <section id="view-login" class="card">
+      <h2>Autenticação de Parceiros</h2>
       <p>Insere o teu e-mail de parceiro para receber o código de acesso:</p>
-      <label for="partnerEmail">E-mail profissional:</label>
-      <input type="email" id="partnerEmail" placeholder="teu.email@maisqueseguros.pt" />
-      <button id="sendOtpBtn" class="btn btn-primary">Enviar código de acesso</button>
+
+      <label for="emailInput">E-mail profissional:</label>
+      <input type="email" id="emailInput" placeholder="exemplo@maisqueseguros.pt" required />
+      <button id="sendOtpBtn" class="btn-primary">Enviar código de acesso</button>
+
+      <div id="otpSection" class="hidden">
+        <label for="otpInput">Código recebido:</label>
+        <input type="text" id="otpInput" maxlength="6" placeholder="123456" />
+        <button id="validateOtpBtn" class="btn-primary">Validar código</button>
+      </div>
     </section>
 
-    <!-- Código OTP -->
-    <section class="card view" id="view-otp" hidden aria-labelledby="otpTitulo">
-      <h2 id="otpTitulo">Confirmação do código</h2>
-      <p>Insere o código que recebeste por e-mail:</p>
-      <input type="text" id="otpCode" maxlength="6" placeholder="Ex: 842193" />
-      <button id="validateOtpBtn" class="btn btn-primary">Validar código</button>
-      <button id="backToLoginBtn" class="btn btn-ghost">Voltar</button>
-    </section>
-
-    <!-- Home -->
-    <section class="card view" id="view-home" hidden>
-      <h2>Bem-vindo ao Portal de Parceiros MQS 👋</h2>
-      <p>Escolhe uma das opções abaixo para continuar:</p>
-      <ul class="menu">
-        <li><a href="#">📄 Submeter simulação</a></li>
-        <li><a href="#">📑 Consultar histórico</a></li>
-        <li><a href="#">💬 Apoio técnico</a></li>
-      </ul>
-    </section>
+    <div id="toast"></div>
   </main>
-
-  <div id="toast"></div>
 
   <script src="script.js"></script>
 </body>
