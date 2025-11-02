@@ -22,8 +22,8 @@ async function request(action, data) {
   }
 }
 
-// === LOGIN FLOW ===
-document.getElementById("sendOtpBtn").addEventListener("click", async () => {
+// === AÇÕES DE LOGIN ===
+async function handleSendOtp() {
   const email = document.getElementById("emailInput").value.trim();
   if (!email) return showToast("Por favor, insere o teu e-mail.");
   showToast("A enviar código...", "ok");
@@ -32,12 +32,13 @@ document.getElementById("sendOtpBtn").addEventListener("click", async () => {
   if (res.success) {
     showToast("Código enviado para o e-mail!", "ok");
     document.getElementById("otpSection").classList.remove("hidden");
+    document.getElementById("otpInput").focus();
   } else {
     showToast(res.message || "Erro no envio do código.");
   }
-});
+}
 
-document.getElementById("validateOtpBtn").addEventListener("click", async () => {
+async function handleValidateOtp() {
   const email = document.getElementById("emailInput").value.trim();
   const code = document.getElementById("otpInput").value.trim();
   if (!email || !code) return showToast("Preenche ambos os campos.");
@@ -45,7 +46,30 @@ document.getElementById("validateOtpBtn").addEventListener("click", async () => 
   const res = await request("validateOtp", { email, code });
   if (res.success) {
     showToast("Login autorizado!", "ok");
+
+    // 🟢 Aqui futuramente poderás redirecionar para o painel pós-login:
+    // window.location.href = "dashboard.html";
   } else {
     showToast(res.message || "Código inválido.");
+  }
+}
+
+// === EVENTOS ===
+document.getElementById("sendOtpBtn").addEventListener("click", handleSendOtp);
+document.getElementById("validateOtpBtn").addEventListener("click", handleValidateOtp);
+
+// Pressionar Enter no campo de e-mail → Envia código
+document.getElementById("emailInput").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    handleSendOtp();
+  }
+});
+
+// Pressionar Enter no campo de OTP → Valida acesso
+document.getElementById("otpInput").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    handleValidateOtp();
   }
 });
