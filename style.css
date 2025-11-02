@@ -1,61 +1,33 @@
-/* HEADER AJUSTADO */
+/* === ESTILO GLOBAL === */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f7f6;
+  color: #222;
+}
+
+/* === HEADER === */
 header {
+  background: linear-gradient(135deg, #2e8b57, #00783a);
+  color: white;
+  padding: 2.5rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(90deg, #63d471, #46a56a);
-  color: white;
-  padding: 2rem 1rem;
-  border-radius: 0 0 14px 14px;
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
+  text-align: center;
   flex-wrap: wrap;
-  gap: 1rem;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.12);
+  border-bottom: 4px solid #1d6533;
 }
 
 header .logo {
   width: 85px;
   height: auto;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  padding: 6px;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-  transition: transform 0.3s ease;
-}
+  margin-right: 1.5rem;
+  backg
 
-header .logo:hover {
-  transform: scale(1.08);
-}
-
-.header-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.header-text h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  margin: 0;
-  color: #fff;
-}
-
-.header-text .subtitle {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.9);
-}
-
-/* MOBILE */
-@media (max-width: 720px) {
-  header {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .header-text {
-    align-items: center;
-  }
-
-  .logo {
-    width: 70px;
-  }
-}
