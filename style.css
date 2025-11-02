@@ -57,6 +57,10 @@ body{
 /* Container */
 .container{max-width:980px;margin:-44px auto 100px;padding:0 22px}
 
+/* Views */
+.view{margin:0}
+.row-actions{display:flex;gap:12px;justify-content:flex-end;margin-top:6px}
+
 /* Card */
 .card{background:var(--surface);border-radius:var(--radius);box-shadow:var(--shadow-2);
   padding:26px 26px 28px;margin:28px 0}
@@ -93,7 +97,12 @@ body{
 /* Grid utilitário */
 .grid{display:grid;gap:20px}
 .grid-2{grid-template-columns:1fr 1fr}
-@media (max-width:760px){ .grid-2{grid-template-columns:1fr} }
+.grid-3@lg{grid-template-columns:repeat(3,1fr)}
+@media (max-width:980px){ .grid-3@lg{grid-template-columns:1fr 1fr} }
+@media (max-width:760px){
+  .grid-2{grid-template-columns:1fr}
+  .grid-3@lg{grid-template-columns:1fr}
+}
 
 .reveal[hidden]{display:none !important}
 
@@ -106,6 +115,8 @@ body{
 .btn-primary{background:linear-gradient(180deg,var(--brand-500),var(--brand-600));color:#fff;
   box-shadow:0 10px 24px rgba(16,118,70,.25)}
 .btn-primary:hover{filter:brightness(.98)}
+.btn-surface{background:#f5f7f6;border:1px solid #e2e7e5;color:#0b5f35}
+.btn-surface:hover{background:#eef3f1}
 .btn__spinner{width:16px;height:16px;border-radius:999px;border:2px solid rgba(255,255,255,.45);
   border-top-color:#fff;display:none;animation:spin .9s linear infinite}
 .btn[aria-busy="true"] .btn__label{opacity:.6}
