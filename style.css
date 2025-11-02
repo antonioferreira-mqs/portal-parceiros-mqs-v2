@@ -1,38 +1,42 @@
-/* === HEADER (centralizado e equilibrado) === */
+/* === BASE === */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f7f9f8;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* === HEADER === */
 header {
-  background: linear-gradient(100deg, #00a86b 0%, #007b48 100%);
+  background: linear-gradient(120deg, #009159, #007b48);
   color: white;
-  padding: 2.8rem 1rem 2.2rem;
+  padding: 2.5rem 1rem 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.header-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
-  border-bottom: 3px solid #009159;
-  position: relative;
 }
 
-header .logo {
+.logo {
   width: 95px;
   height: auto;
-  background: #fff;
+  background: #ffffff;
   border-radius: 50%;
   padding: 10px;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease;
 }
 
-header .logo:hover {
-  transform: scale(1.06);
-}
-
-.header-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.logo:hover {
+  transform: scale(1.05);
 }
 
 .header-text h1 {
@@ -41,8 +45,30 @@ header .logo:hover {
   font-weight: 600;
 }
 
-.header-text .subtitle {
-  margin-top: 0.3rem;
+.subtitle {
+  margin: 0.3rem 0 0;
   font-size: 1rem;
   opacity: 0.9;
 }
+
+/* === MAIN === */
+.container {
+  flex: 1;
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.form-section {
+  background: #fff;
+  padding: 1.8rem;
+  border-radius: 14px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+  margin-bottom: 2rem;
+}
+
+.form-section h2 {
+  color: #007b48;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  border
