@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portal de Parceiros – Mais Que Seguros</title>
 
-  <!-- Tipografia -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-
-  <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="logo-mqs-favicon.svg" />
   <meta name="theme-color" content="#0D6B3B" />
 
@@ -31,10 +28,10 @@
     </div>
   </header>
 
+  <!-- VIEWS (SPA) -->
   <main class="container">
-
-    <!-- LOGIN -->
-    <section class="card" id="loginCard" aria-labelledby="loginTitulo">
+    <!-- VIEW: LOGIN -->
+    <section class="card view" id="view-login" aria-labelledby="loginTitulo">
       <div class="card-head">
         <span class="pill">Acesso</span>
         <h3 id="loginTitulo">Login de Parceiro</h3>
@@ -66,12 +63,87 @@
       </form>
     </section>
 
-    <!-- AUTOMÓVEL -->
-    <section class="card" aria-labelledby="auto-titulo">
+    <!-- VIEW: HOME (após login) -->
+    <section class="card view" id="view-home" hidden>
+      <div class="card-head">
+        <span class="pill">Início</span>
+        <h3>O que pretendes fazer?</h3>
+        <p class="helper">Escolhe o tipo de pedido para avançar.</p>
+      </div>
+
+      <div class="grid grid-2">
+        <button class="btn btn-primary" data-nav="simulacao-menu">
+          <span class="btn__label">Pedido de Simulação</span>
+          <span class="btn__spinner" aria-hidden="true"></span>
+        </button>
+        <button class="btn btn-primary" data-nav="outro-pedido">
+          <span class="btn__label">Outro Pedido</span>
+          <span class="btn__spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- VIEW: MENU RAMOS -->
+    <section class="card view" id="view-simulacao-menu" hidden>
+      <div class="card-head">
+        <span class="pill">Simulações</span>
+        <h3>Escolhe o ramo do pedido de simulação</h3>
+      </div>
+
+      <div class="grid grid-2 grid-3@lg">
+        <button class="btn btn-surface" data-nav="auto-form">Automóvel</button>
+        <button class="btn btn-surface" disabled>Multirriscos</button>
+        <button class="btn btn-surface" disabled>Saúde</button>
+        <button class="btn btn-surface" disabled>Vida</button>
+        <button class="btn btn-surface" disabled>Vida Crédito</button>
+        <button class="btn btn-surface" disabled>Acidentes Pessoais</button>
+        <button class="btn btn-surface" disabled>Cães e Gatos</button>
+        <button class="btn btn-surface" disabled>Acidentes de Trabalho</button>
+        <button class="btn btn-surface" disabled>Responsabilidade Civil</button>
+        <button class="btn btn-surface" disabled>Viagem</button>
+        <button class="btn btn-surface" disabled>PPR</button>
+        <button class="btn btn-surface" disabled>Outros</button>
+      </div>
+
+      <div class="row-actions">
+        <button class="btn" data-nav="home">Voltar</button>
+      </div>
+    </section>
+
+    <!-- VIEW: OUTRO PEDIDO (placeholder simples) -->
+    <section class="card view" id="view-outro-pedido" hidden>
+      <div class="card-head">
+        <span class="pill">Tarefas</span>
+        <h3>Outro Pedido</h3>
+        <p class="helper">Formulário breve para pedidos gerais (será ligado à lista “TAREFAS”).</p>
+      </div>
+
+      <form id="formOutro" class="form" novalidate>
+        <label class="input">
+          <span>Assunto</span>
+          <input type="text" name="assunto" placeholder="Ex.: Atualização de dados" required />
+        </label>
+        <label class="input">
+          <span>Descrição</span>
+          <textarea name="descricao" placeholder="Descreve o pedido" required></textarea>
+        </label>
+        <button type="submit" class="btn btn-primary">
+          <span class="btn__label">Submeter Pedido</span>
+          <span class="btn__spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <div class="row-actions">
+        <button class="btn" data-nav="home">Voltar</button>
+      </div>
+    </section>
+
+    <!-- VIEW: FORMULÁRIO AUTOMÓVEL -->
+    <section class="card view" id="view-auto-form" hidden aria-labelledby="auto-titulo">
       <div class="card-head">
         <span class="pill">Ramo: Automóvel</span>
         <h3 id="auto-titulo">Pedido de Simulação — Automóvel</h3>
-        <p class="helper">Preenche os dados do tomador e do veículo. Campos mudam consoante as opções.</p>
+        <p class="helper">Preenche os dados. Alguns campos ajustam-se às tuas escolhas.</p>
       </div>
 
       <form id="formAuto" class="form" novalidate>
@@ -93,6 +165,17 @@
             <span>NIF</span>
             <input type="text" inputmode="numeric" pattern="^[0-9]{9}$" maxlength="9"
                    name="auto_nif" id="auto_nif" placeholder="9 dígitos" required />
+          </label>
+        </div>
+
+        <div class="grid grid-2">
+          <label class="input">
+            <span>Email</span>
+            <input type="email" name="auto_contact_email" id="auto_contact_email" placeholder="cliente@exemplo.pt" />
+          </label>
+          <label class="input">
+            <span>Telemóvel</span>
+            <input type="tel" name="auto_phone" id="auto_phone" placeholder="9XXXXXXXX" />
           </label>
         </div>
 
@@ -203,10 +286,13 @@
           <span>Concordo com o tratamento dos dados para efeitos de simulação e contacto.</span>
         </label>
 
-        <button type="submit" class="btn btn-primary">
-          <span class="btn__label">Enviar Pedido (Automóvel)</span>
-          <span class="btn__spinner" aria-hidden="true"></span>
-        </button>
+        <div class="row-actions">
+          <button type="button" class="btn" data-nav="simulacao-menu">Voltar</button>
+          <button type="submit" class="btn btn-primary">
+            <span class="btn__label">Enviar Pedido (Automóvel)</span>
+            <span class="btn__spinner" aria-hidden="true"></span>
+          </button>
+        </div>
       </form>
     </section>
   </main>
@@ -216,3 +302,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
