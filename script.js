@@ -1,5 +1,5 @@
 // === CONFIGURAÇÃO PRINCIPAL ===
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycbwIvq69I4WIWFiBxeLwdENJbSuJov0KWCc62KXqNASa0evDj9vQ9KPPann24mrg8NQPqQ/exec";
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbw60mMDFt6EHH_EI0tpkM6Eyc-lYMAEkOwNStJmjfuuQu5EmvO0bagCvGVHePyLAo7McQ/exec";
 
 // === UTILITÁRIOS ===
 function showToast(msg, type = "error") {
