@@ -1,65 +1,43 @@
+/* === ESTILO GERAL === */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f6faf7;
+  color: #333;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
 /* === HEADER === */
 header {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(90deg, #32b64a, #5cc15e);
+  background: linear-gradient(90deg, #3dbb4c, #1a8c3d);
   color: white;
   padding: 1.8rem 1rem;
   border-radius: 0 0 12px 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.2rem;
+  text-align: center;
 }
 
 header .logo {
-  width: 70px;         /* aumenta visibilidade do símbolo */
+  width: 80px;
   height: auto;
   display: block;
-  transition: transform 0.3s ease;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
+  transition: transform 0.3s ease, filter 0.3s ease;
 }
 
 header .logo:hover {
-  transform: scale(1.07); /* ligeiro destaque ao passar o rato */
+  transform: scale(1.08);
+  filter: drop-shadow(0 3px 6px rgba(0,0,0,0.25));
 }
 
 .header-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-}
-
-.header-text h1 {
-  font-size: 1.9rem;
-  font-weight: 600;
-  margin: 0;
-  color: #fff;
-}
-
-.header-text .subtitle {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin-top: 0.2rem;
-}
-
-/* === MOBILE === */
-@media (max-width: 600px) {
-  header {
-    flex-direction: column;
-    gap: 0.5rem;
-    text-align: center;
-  }
-
-  .header-text {
-    align-items: center;
-  }
-
-  .header-text h1 {
-    font-size: 1.6rem;
-  }
-
-  header .logo {
-    width: 55px;
-  }
-}
+  disp
