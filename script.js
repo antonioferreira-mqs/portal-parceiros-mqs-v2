@@ -1,75 +1,58 @@
 // === CONFIGURAÇÃO PRINCIPAL ===
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycbw60mMDFt6EHH_EI0tpkM6Eyc-lYMAEkOwNStJmjfuuQu5EmvO0bagCvGVHePyLAo7McQ/exec";
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbw60mMDFt6EHH_EI0tpkM6Eyc-lYMAEkOwNStJmjfuuQu5EmvO0bagCvGVHePyLAo7McQ/exec"; 
 
 // === UTILITÁRIOS ===
-function showToast(msg, type = "error") {
+function showToast(msg, type = "ok") {
   const toast = document.getElementById("toast");
   toast.textContent = msg;
-  toast.className = "show " + (type === "ok" ? "ok" : "");
-  setTimeout(() => (toast.className = ""), 3200);
+  toast.className = `toast ${type}`;
+  toast.style.display = "block";
+  setTimeout(() => toast.style.display = "none", 4000);
 }
 
-async function request(action, data) {
-  try {
-    const res = await fetch(BACKEND_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action, ...data }),
-    });
-    return await res.json();
-  } catch (err) {
-    return { success: false, message: "Erro de ligação ao servidor." };
-  }
-}
+// === EVENTO PRINCIPAL ===
+document.addEventListener("DOMContentLoaded", () => {
+  const emailInput = document.getElementById("email");
+  const sendButton = document.getElementById("sendButton");
 
-// === AÇÕES DE LOGIN ===
-async function handleSendOtp() {
-  const email = document.getElementById("emailInput").value.trim();
-  if (!email) return showToast("Por favor, insere o teu e-mail.");
-  showToast("A enviar código...", "ok");
+  // Permite enviar com Enter
+  emailInput.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      sendButton.click();
+    }
+  });
 
-  const res = await request("sendOtp", { email });
-  if (res.success) {
-    showToast("Código enviado para o e-mail!", "ok");
-    document.getElementById("otpSection").classList.remove("hidden");
-    document.getElementById("otpInput").focus();
-  } else {
-    showToast(res.message || "Erro no envio do código.");
-  }
-}
+  // Ação do botão
+  sendButton.addEventListener("click", async () => {
+    const email = emailInput.value.trim();
 
-async function handleValidateOtp() {
-  const email = document.getElementById("emailInput").value.trim();
-  const code = document.getElementById("otpInput").value.trim();
-  if (!email || !code) return showToast("Preenche ambos os campos.");
+    if (!email) {
+      showToast("Por favor insere o teu e-mail profissional.", "error");
+      return;
+    }
 
-  const res = await request("validateOtp", { email, code });
-  if (res.success) {
-    showToast("Login autorizado!", "ok");
+    showToast("A enviar código de acesso...", "info");
 
-    // 🟢 Aqui futuramente poderás redirecionar para o painel pós-login:
-    // window.location.href = "dashboard.html";
-  } else {
-    showToast(res.message || "Código inválido.");
-  }
-}
+    try {
+      const response = await fetch(BACKEND_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "sendOtp", email }),
+      });
 
-// === EVENTOS ===
-document.getElementById("sendOtpBtn").addEventListener("click", handleSendOtp);
-document.getElementById("validateOtpBtn").addEventListener("click", handleValidateOtp);
+      const result = await response.json();
+      console.log("Resposta do servidor:", result);
 
-// Pressionar Enter no campo de e-mail → Envia código
-document.getElementById("emailInput").addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    handleSendOtp();
-  }
-});
+      if (result.success) {
+        showToast("Código enviado para o e-mail.", "ok");
+      } else {
+        showToast(result.message || "Erro ao enviar o código.", "error");
+      }
 
-// Pressionar Enter no campo de OTP → Valida acesso
-document.getElementById("otpInput").addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    handleValidateOtp();
-  }
+    } catch (error) {
+      console.error("Erro de ligação ao servidor:", error);
+      showToast("Erro de ligação ao servidor.", "error");
+    }
+  });
 });
