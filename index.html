@@ -1,33 +1,185 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Portal de Parceiros – Mais Que Seguros</title>
 
   <!-- Tipografia -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Favicon (ficheiro centrado) -->
+  <link rel="icon" type="image/svg+xml" href="logo-mqs-favicon.svg" />
+  <link rel="alternate icon" href="logo-mqs-favicon.svg" />
+  <meta name="theme-color" content="#0D6B3B" />
 
   <!-- CSS -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="logo-mqs-favicon.svg">
-  <link rel="alternate icon" href="logo-mqs-favicon.png">
+  <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
-  <header>
-    <div class="header-content">
-      <img src="logo-mqs.svg" alt="Mais Que Seguros" class="logo">
-      <div class="header-text">
-        <h1>Portal de Parceiros</h1>
-        <p class="subtitle">Mais Que Seguros</p>
+  <!-- Header / Brand -->
+  <header class="site-header">
+    <div class="brand">
+      <img class="brand__logo" src="logo-mqs.svg" alt="Mais Que Seguros" />
+      <div class="brand__text">
+        <h1 class="brand__title">Portal de Parceiros</h1>
+        <p class="brand__subtitle">Mais Que Seguros</p>
       </div>
     </div>
   </header>
 
+  <!-- Conteúdo -->
   <main class="container">
-    <section class="form-section">
-      <h2>Pedido de Simulação</h2>
-      <form id="formSimulac
+    <!-- CARD – Pedido de Simulação: Automóvel -->
+    <section class="card" aria-labelledby="auto-titulo">
+      <div class="card-head">
+        <span class="pill">Ramo: Automóvel</span>
+        <h3 id="auto-titulo">Pedido de Simulação — Automóvel</h3>
+        <p class="helper">Preenche os dados do tomador e do veículo. Campos mudam consoante as opções.</p>
+      </div>
+
+      <form id="formAuto" class="form" novalidate>
+        <!-- Contacto do parceiro para confirmação -->
+        <label class="input">
+          <span>Email do Parceiro (para confirmação)</span>
+          <input type="email" name="auto_email" id="auto_email" placeholder="ex.: parceiro@empresa.pt" required />
+        </label>
+
+        <div class="grid grid-2">
+          <label class="input">
+            <span>Nome Completo</span>
+            <input type="text" name="auto_nome" id="auto_nome" required />
+          </label>
+
+          <label class="input">
+            <span>NIF</span>
+            <input type="text" inputmode="numeric" pattern="^[0-9]{9}$" maxlength="9"
+                   name="auto_nif" id="auto_nif" placeholder="9 dígitos" required />
+          </label>
+        </div>
+
+        <label class="input">
+          <span>Código Postal + Localidade + Morada</span>
+          <input type="text" name="auto_morada" id="auto_morada" placeholder="Ex.: 4050-123 Porto, Rua ... nº ..." required />
+        </label>
+
+        <div class="grid grid-2">
+          <label class="input">
+            <span>Data de Nascimento</span>
+            <input type="date" name="auto_dn" id="auto_dn" required />
+          </label>
+
+          <label class="input">
+            <span>Data da Carta de Condução</span>
+            <input type="date" name="auto_dcarta" id="auto_dcarta" required />
+          </label>
+        </div>
+
+        <fieldset class="fieldset">
+          <legend>O Tomador é o Condutor Habitual?</legend>
+          <div class="options">
+            <label class="option">
+              <input type="radio" name="auto_tomadorCondutor" value="SIM" checked />
+              <span>Sim</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="auto_tomadorCondutor" value="NAO" />
+              <span>Não</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <!-- Grupo Condutor Habitual (aparece se NÃO) -->
+        <div id="auto_condutorGrupo" class="reveal" hidden>
+          <div class="grid grid-2">
+            <label class="input">
+              <span>Nome do Condutor Habitual</span>
+              <input type="text" name="auto_ch_nome" id="auto_ch_nome" />
+            </label>
+            <label class="input">
+              <span>NIF (Condutor Habitual)</span>
+              <input type="text" inputmode="numeric" pattern="^[0-9]{9}$" maxlength="9"
+                     name="auto_ch_nif" id="auto_ch_nif" placeholder="9 dígitos" />
+            </label>
+          </div>
+          <div class="grid grid-2">
+            <label class="input">
+              <span>Data de Nascimento (Condutor Habitual)</span>
+              <input type="date" name="auto_ch_dn" id="auto_ch_dn" />
+            </label>
+            <label class="input">
+              <span>Data da Carta (Condutor Habitual)</span>
+              <input type="date" name="auto_ch_dcarta" id="auto_ch_dcarta" />
+            </label>
+          </div>
+        </div>
+
+        <div class="grid grid-2">
+          <label class="input">
+            <span>Matrícula</span>
+            <input type="text" name="auto_matricula" id="auto_matricula"
+                   placeholder="00-XX-00" pattern="^[0-9A-Z]{2}-[0-9A-Z]{2}-[0-9A-Z]{2}$" required />
+          </label>
+          <label class="input">
+            <span>Marca e Modelo (e Versão)</span>
+            <input type="text" name="auto_marcaModelo" id="auto_marcaModelo" placeholder="Ex.: Toyota Yaris 1.5 Hybrid Comfort" required />
+          </label>
+        </div>
+
+        <fieldset class="fieldset">
+          <legend>Coberturas Pretendidas (pode escolher várias)</legend>
+          <div class="options options--wrap">
+            <label class="option"><input type="checkbox" name="auto_coberturas" value="RC" /> <span>RC</span></label>
+            <label class="option"><input type="checkbox" name="auto_coberturas" value="RC+QIV" /> <span>RC + Quebra Isolada de Vidros</span></label>
+            <label class="option"><input type="checkbox" name="auto_coberturas" value="RC+QIV+Roubo" /> <span>RC + QIV + Roubo</span></label>
+            <label class="option"><input type="checkbox" name="auto_coberturas" value="Danos Próprios" id="auto_dp" /> <span>Danos Próprios</span></label>
+          </div>
+        </fieldset>
+
+        <!-- Campos extra quando Danos Próprios -->
+        <div id="auto_dpGrupo" class="reveal" hidden>
+          <div class="grid grid-2">
+            <label class="input">
+              <span>Franquia</span>
+              <select name="auto_dp_franquia" id="auto_dp_franquia">
+                <option value="">— selecionar —</option>
+                <option value="0">0 €</option>
+                <option value="250">250 €</option>
+                <option value="500">500 €</option>
+              </select>
+            </label>
+            <label class="input">
+              <span>Capital Seguro</span>
+              <input type="text" inputmode="numeric" name="auto_dp_capital" id="auto_dp_capital" placeholder="Ex.: 16 500 €" />
+            </label>
+          </div>
+        </div>
+
+        <label class="input">
+          <span>Prémio de Referência + Fracionamento</span>
+          <input type="text" name="auto_premioRef" id="auto_premioRef" placeholder="Ex.: 357 €/anual" />
+        </label>
+
+        <!-- Consentimento e envio -->
+        <label class="checkbox-consent">
+          <input type="checkbox" id="auto_consent" required />
+          <span>Concordo com o tratamento dos dados para efeitos de simulação e contacto.</span>
+        </label>
+
+        <button type="submit" class="btn btn-primary">
+          <span class="btn__label">Enviar Pedido (Automóvel)</span>
+          <span class="btn__spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+    </section>
+
+    <!-- Poderás adicionar aqui mais cards para outros ramos, seguindo o mesmo padrão -->
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- JS -->
+  <script src="script.js"></script>
+</body>
+</html>
