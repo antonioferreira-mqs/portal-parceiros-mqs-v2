@@ -1,5 +1,5 @@
 // === CONFIGURAÇÃO PRINCIPAL ===
-const BACKEND_URL = "https://script.google.com/macros/s/SEU_URL_DO_APPS_SCRIPT/exec";
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbz9J8jn-cchKM3RtkMcFjrN13XlCBldA2BpCxzualGBMRHrG4BXW55HnznjCKb-warXPg/exec";
 
 // === UTILITÁRIOS ===
 function showToast(msg, type = "ok") {
