@@ -20,6 +20,7 @@
   </header>
 
   <main class="container">
+    <!-- VIEW: LOGIN -->
     <section id="view-login" class="card" aria-labelledby="login-title">
       <h2 id="login-title">Autenticação de Parceiros</h2>
       <p>Insere o teu e-mail de parceiro para receber o código de acesso:</p>
@@ -29,10 +30,17 @@
       <button id="sendOtpBtn" class="btn-primary" type="button">Enviar código de acesso</button>
 
       <div id="otpSection" class="hidden" aria-live="polite">
-        <label for="otpInput">Código recebido:</label>
+        <label for="otpInput">Código de validação:</label>
         <input type="text" id="otpInput" maxlength="6" inputmode="numeric" placeholder="123456" />
         <button id="validateOtpBtn" class="btn-primary" type="button">Validar código</button>
       </div>
+    </section>
+
+    <!-- VIEW: SUCESSO -->
+    <section id="view-success" class="card hidden" aria-live="polite">
+      <h2>Autenticação concluída</h2>
+      <p>Acesso autorizado para <strong id="partnerEmailBadge"></strong>.</p>
+      <p>Podes fechar esta janela ou navegar para a área de trabalho.</p>
     </section>
 
     <div id="toast" role="status" aria-live="polite"></div>
