@@ -1,149 +1,65 @@
-@charset "utf-8";
-
-/* === VARIÁVEIS DE COR === */
-:root {
-  --green-main: #1FA24A;
-  --green-light: #7ED957;
-  --green-dark: #138B3B;
-  --bg: #F7FAF8;
-  --text: #1A1A1A;
-  --white: #FFFFFF;
-}
-
-/* === RESET === */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Poppins', sans-serif;
-  background-color: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
-
 /* === HEADER === */
 header {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
-  background: linear-gradient(135deg, var(--green-main), var(--green-light));
-  color: var(--white);
-  padding: 30px 20px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  background: linear-gradient(90deg, #32b64a, #5cc15e);
+  color: white;
+  padding: 1.8rem 1rem;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-.logo {
-  height: 80px;
-  width: auto;
-  border-radius: 10px;
+header .logo {
+  width: 70px;         /* aumenta visibilidade do símbolo */
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+header .logo:hover {
+  transform: scale(1.07); /* ligeiro destaque ao passar o rato */
+}
+
+.header-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
 }
 
 .header-text h1 {
+  font-size: 1.9rem;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  font-size: 1.8rem;
+  margin: 0;
+  color: #fff;
 }
 
-.subtitle {
-  font-size: 1rem;
-  opacity: 0.9;
+.header-text .subtitle {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 0.2rem;
 }
 
-/* === CONTAINER === */
-.container {
-  max-width: 900px;
-  margin: 40px auto;
-  background-color: var(--white);
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
-}
-
-.form-section + .form-section {
-  margin-top: 40px;
-}
-
-h2 {
-  color: var(--green-dark);
-  font-weight: 600;
-  font-size: 1.3rem;
-  margin-bottom: 15px;
-}
-
-/* === FORMULÁRIOS === */
-input, textarea {
-  width: 100%;
-  padding: 12px 15px;
-  margin-bottom: 15px;
-  border: 1.5px solid #d0e3d5;
-  border-radius: 6px;
-  font-size: 15px;
-  transition: all 0.2s ease;
-  font-family: 'Poppins', sans-serif;
-}
-
-input:focus, textarea:focus {
-  border-color: var(--green-main);
-  outline: none;
-  box-shadow: 0 0 4px rgba(31, 162, 74, 0.3);
-}
-
-textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
-/* === BOTÕES === */
-button {
-  background-color: var(--green-main);
-  color: var(--white);
-  border: none;
-  padding: 12px 20px;
-  border-radius: 6px;
-  font-weight: 500;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background 0.3s ease, transform 0.1s ease;
-}
-
-button:hover {
-  background-color: var(--green-dark);
-  transform: translateY(-1px);
-}
-
-button:active {
-  transform: translateY(1px);
-}
-
-/* === FOOTER === */
-footer {
-  text-align: center;
-  font-size: 13px;
-  color: #777;
-  margin: 40px 0 20px;
-}
-
-/* === RESPONSIVO === */
-@media (max-width: 700px) {
+/* === MOBILE === */
+@media (max-width: 600px) {
   header {
     flex-direction: column;
+    gap: 0.5rem;
     text-align: center;
   }
 
-  .logo {
-    height: 70px;
+  .header-text {
+    align-items: center;
   }
 
-  .container {
-    padding: 20px;
-    margin: 20px;
+  .header-text h1 {
+    font-size: 1.6rem;
   }
 
-  button {
-    width: 100%;
+  header .logo {
+    width: 55px;
   }
 }
