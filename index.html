@@ -4,11 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portal de Parceiros – Mais Que Seguros</title>
+
+  <!-- Favicon e font -->
   <link rel="icon" type="image/svg+xml" href="logo-mqs-favicon.svg" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="style.css" />
 </head>
-
 <body>
   <header class="site-header">
     <div class="brand-centered">
@@ -24,17 +26,17 @@
       <p>Insere o teu e-mail de parceiro para receber o código de acesso:</p>
 
       <label for="emailInput">E-mail profissional:</label>
-      <input type="email" id="emailInput" required />
+      <input type="email" id="emailInput" autocomplete="email" required />
       <button id="sendOtpBtn" class="btn-primary">Enviar código de acesso</button>
 
       <div id="otpSection" class="hidden">
         <label for="otpInput">Código recebido:</label>
-        <input type="text" id="otpInput" maxlength="6" placeholder="Ex: 123456" />
+        <input type="text" id="otpInput" maxlength="6" inputmode="numeric" pattern="[0-9]*" />
         <button id="validateOtpBtn" class="btn-primary">Validar código</button>
       </div>
     </section>
 
-    <div id="toast"></div>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
   </main>
 
   <script src="script.js"></script>
