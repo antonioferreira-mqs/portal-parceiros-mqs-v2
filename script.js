@@ -1,5 +1,5 @@
 // ====== CONFIG ======
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycby2RXHJvDmqfiTkEXRBPQmJEMULOlAPKs9GV8HFm6fDWtiyQnpqwTwVxRZ4b2uQYVY/exec";
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbx09NFICUUQGva7euQ7I4KzJp3AdnEeBJBBEd_ZklmIxp2t_RHdXnSuBPF2zT9hxg_B/exec";
 
 // ====== UI helpers ======
 const toastEl = document.getElementById("toast");
