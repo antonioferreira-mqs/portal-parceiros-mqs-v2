@@ -1,3 +1,6 @@
+// script.js (ES Module)
+import { setSession, getSession } from "./auth.js";
+
 // === CONFIGURAÇÃO PRINCIPAL ===
 const BACKEND_URL =
   "https://script.google.com/macros/s/AKfycbzBuhMRRFfXJFnrfIyaKBgD_4Dkd66n-SynmKyvX72ElSDqOHj9POx3PiOyXKf8EIIP/exec";
@@ -39,28 +42,26 @@ function showOtpSection(show) {
 
 // === EVENTO PRINCIPAL ===
 document.addEventListener("DOMContentLoaded", () => {
+  // Se já tiver sessão válida, segue direto para a área interna
+  const existing = getSession?.();
+  if (existing) {
+    window.location.href = "parceiros.html";
+    return;
+  }
+
   const emailInput = $("#emailInput");
   const otpInput = $("#otpInput");
   const sendBtn = $("#sendOtpBtn");
   const validateBtn = $("#validateOtpBtn");
 
-  // Enter no campo de e-mail → enviar OTP
   emailInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      sendBtn.click();
-    }
+    if (e.key === "Enter") { e.preventDefault(); sendBtn.click(); }
   });
 
-  // Enter no campo de código → validar
   otpInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      validateBtn.click();
-    }
+    if (e.key === "Enter") { e.preventDefault(); validateBtn.click(); }
   });
 
-  // Clicar em Enviar código
   sendBtn.addEventListener("click", async () => {
     const email = emailInput.value.trim();
 
@@ -70,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    setLoading(sendBtn, true, "A enviar código…");
+    setLoading(sendBtn, true, "A enviar código…", "Enviar código de acesso");
     try {
       const resp = await fetch(BACKEND_URL, {
         method: "POST",
@@ -78,23 +79,21 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ action: "sendOtp", email }),
       });
 
-      // Pode vir 200 com JSON, ou erro com texto
-      let result = {};
       const text = await resp.text();
-      try { result = JSON.parse(text); } catch { /* mantém vazio */ }
+      let result = {};
+      try { result = JSON.parse(text); } catch {}
 
       if (!resp.ok) {
         showToast("Não foi possível comunicar com o servidor.", "error");
-        setLoading(sendBtn, false);
         return;
       }
 
-      if (result && result.success) {
+      if (result?.success) {
         showToast("Código enviado por e-mail.");
         showOtpSection(true);
       } else {
-        const msg = (result && result.message) || "Não foi possível enviar o código.";
-        if (/não autorizado|nao autorizado|nao autorizado/i.test(msg)) {
+        const msg = result?.message || "Não foi possível enviar o código.";
+        if (/não autorizado|nao autorizado/i.test(msg)) {
           showToast("Este e-mail não tem permissão para entrar no portal.", "error");
         } else {
           showToast(msg, "error");
@@ -109,15 +108,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Clicar em Validar código
   validateBtn.addEventListener("click", async () => {
-    const email = emailInput.value.trim();
-    const code = otpInput.value.trim();
+    const email = $("#emailInput").value.trim();
+    const code  = $("#otpInput").value.trim();
 
     if (!email) { showToast("Indica o e-mail primeiro.", "error"); return; }
     if (!/^\d{6}$/.test(code)) { showToast("Código inválido. Usa 6 dígitos.", "error"); return; }
 
-    setLoading(validateBtn, true, "A validar…");
+    setLoading(validateBtn, true, "A validar…", "Validar código");
     try {
       const resp = await fetch(BACKEND_URL, {
         method: "POST",
@@ -125,8 +123,8 @@ document.addEventListener("DOMContentLoaded", () => {
         body: JSON.stringify({ action: "validateOtp", email, code }),
       });
 
-      let result = {};
       const text = await resp.text();
+      let result = {};
       try { result = JSON.parse(text); } catch {}
 
       if (!resp.ok) {
@@ -134,12 +132,13 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      if (result && result.success) {
+      if (result?.success) {
+        // cria sessão por 60 minutos e segue
+        setSession(email, 60 * 60 * 1000);
         showToast("Login autorizado.");
-        // 👉 Aqui podes redirecionar para a área interna:
-        // window.location.href = "/dashboard.html";
+        window.location.href = "parceiros.html";
       } else {
-        showToast((result && result.message) || "Código inválido ou expirado.", "error");
+        showToast(result?.message || "Código inválido ou expirado.", "error");
       }
     } catch (err) {
       console.error(err);
