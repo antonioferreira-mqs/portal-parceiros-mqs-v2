@@ -1,13 +1,26 @@
 // === CONFIGURAÇÃO PRINCIPAL ===
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzBuhMRRFfXJFnrfIyaKBgD_4Dkd66n-SynmKyvX72ElSDqOHj9POx3PiOyXKf8EIIP/exec";
+const BACKEND_URL =
+  "https://script.google.com/macros/s/AKfycbzBKjVRYWf1SLT8UfTKFEO-KAS1J5mezMiAFZ5TTZpykH4Cb1nV-6lbPQ_91sApniTpwg/exec";
 
 // === UTILITÁRIOS ===
 function showToast(msg, type = "ok") {
   const toast = document.getElementById("toast");
   toast.textContent = msg;
   toast.className = `toast ${type}`;
-  toast.style.display = "block";
-  setTimeout(() => (toast.style.display = "none"), 4000);
+  toast.style.opacity = "1";
+  setTimeout(() => (toast.style.opacity = "0"), 4000);
+}
+
+function setLoading(btn, isLoading, textDefault) {
+  if (isLoading) {
+    btn.classList.add("btn-loading");
+    btn.textContent = "";
+    btn.disabled = true;
+  } else {
+    btn.classList.remove("btn-loading");
+    btn.textContent = textDefault;
+    btn.disabled = false;
+  }
 }
 
 // === EVENTOS PRINCIPAIS ===
@@ -36,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     showToast("A enviar código de acesso...", "info");
-    sendOtpBtn.disabled = true;
+    setLoading(sendOtpBtn, true, "Enviar código de acesso");
 
     try {
       const response = await fetch(BACKEND_URL, {
@@ -52,7 +65,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (result.success) {
         showToast("Código enviado com sucesso!", "ok");
+        otpSection.classList.add("show");
         otpSection.classList.remove("hidden");
+      } else if (
+        result.message &&
+        result.message.toLowerCase().includes("não autorizado")
+      ) {
+        showToast(
+          "Este e-mail não tem permissão para aceder ao Portal de Parceiros MQS.",
+          "error"
+        );
       } else {
         showToast(result.message || "Erro ao enviar o código.", "error");
       }
@@ -60,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Erro:", err);
       showToast("Erro de ligação ao servidor.", "error");
     } finally {
-      sendOtpBtn.disabled = false;
+      setLoading(sendOtpBtn, false, "Enviar código de acesso");
     }
   });
 
@@ -75,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     showToast("A validar código...", "info");
-    validateOtpBtn.disabled = true;
+    setLoading(validateOtpBtn, true, "Validar código");
 
     try {
       const response = await fetch(BACKEND_URL, {
@@ -91,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (result.success) {
         showToast("Login autorizado! A redirecionar...", "ok");
         setTimeout(() => {
-          window.location.href = "dashboard.html"; // Página interna futura
+          window.location.href = "dashboard.html"; // página seguinte
         }, 1500);
       } else {
         showToast(result.message || "Código inválido ou expirado.", "error");
@@ -100,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error("Erro:", err);
       showToast("Erro de ligação ao servidor.", "error");
     } finally {
-      validateOtpBtn.disabled = false;
+      setLoading(validateOtpBtn, false, "Validar código");
     }
   });
 });
