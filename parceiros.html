@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Área de Parceiros – MQS</title>
+  <link rel="icon" type="image/svg+xml" href="logo-mqs-favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand-centered">
+      <img class="brand_logo" src="logo-mqs.svg" alt="Mais Que Seguros" />
+      <h1 class="brand_title">Área de Parceiros</h1>
+      <p class="brand_subtitle">Mais Que Seguros</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Bem-vindo</h2>
+      <p id="partnerEmail" class="muted"></p>
+
+      <!-- Conteúdo protegido aqui -->
+      <p>Conteúdo reservado a parceiros autorizados.</p>
+
+      <button id="logoutBtn" class="btn-primary" style="margin-top:18px">Sair</button>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="module">
+    import { requireAuth, clearSession, getSession } from "./auth.js";
+
+    // Bloqueia acesso se não tiver sessão (redireciona para index.html)
+    const ses = requireAuth({ redirectTo: "index.html" });
+    if (ses) {
+      document.getElementById("partnerEmail").textContent = `Sessão ativa: ${ses.email}`;
+    }
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+      clearSession();
+      window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
