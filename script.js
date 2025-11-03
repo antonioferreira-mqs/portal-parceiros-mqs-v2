@@ -1,5 +1,5 @@
 // ====== CONFIG ======
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycbx09NFICUUQGva7euQ7I4KzJp3AdnEeBJBBEd_ZklmIxp2t_RHdXnSuBPF2zT9hxg_B/exec";
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbxt6uH4XBZyvTupNohkHHt7bLfw2SIO1t_5ixmB5nLKa3wMurvIFzNFrBGyv7cxXcMR/exec"; // <- atualiza se mudares a implantação
 
 // ====== UI helpers ======
 const toastEl = document.getElementById("toast");
@@ -7,6 +7,7 @@ function showToast(msg, type = "ok") {
   toastEl.textContent = msg;
   toastEl.className = type ? type : "ok";
   toastEl.style.display = "block";
+  // limpa depois de 3.5s
   setTimeout(() => (toastEl.style.display = "none"), 3500);
 }
 function setLoading(btn, isLoading) {
@@ -16,21 +17,16 @@ function setLoading(btn, isLoading) {
 }
 
 // ====== API ======
-// Envia como "text/plain" para evitar preflight CORS (OPTIONS)
+// Enviar como x-www-form-urlencoded (simple request, sem preflight)
 async function callApi(action, payload) {
-  const body = JSON.stringify({ action, ...payload });
-  const res = await fetch(BACKEND_URL, {
-    method: "POST",
-    headers: { "Content-Type": "text/plain;charset=utf-8" },
-    body
-  });
+  const data = new URLSearchParams();
+  data.append("data", JSON.stringify({ action, ...payload }));
 
-  // Se falhar, lança o texto para termos mais detalhe no console
+  const res = await fetch(BACKEND_URL, { method: "POST", body: data });
   if (!res.ok) {
     const txt = await res.text().catch(() => "");
     throw new Error(`HTTP ${res.status} – ${txt || "sem detalhe"}`);
   }
-  // Apps Script devolve JSON em doPost
   return res.json();
 }
 
@@ -62,6 +58,7 @@ sendOtpBtn.addEventListener("click", async () => {
     if (r.ok) {
       showToast("Código enviado para o e-mail.", "ok");
       otpSection.classList.remove("hidden");
+      otpInput.value = "";
       otpInput.focus();
     } else if (r.code === "UNAUTHORIZED") {
       showToast("Email não autorizado para aceder ao portal.", "warn");
@@ -73,24 +70,25 @@ sendOtpBtn.addEventListener("click", async () => {
   } catch (err) {
     console.error("Erro no fetch:", err);
     showToast("Falha de ligação. Verifica a Internet.", "error");
+    otpSection.classList.add("hidden");
   } finally {
     setLoading(sendOtpBtn, false);
   }
 });
 
 // Enter no OTP => validar
-otpInput?.addEventListener("keydown", (e) => {
+otpInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     e.preventDefault();
     validateOtpBtn.click();
   }
 });
 
-validateOtpBtn?.addEventListener("click", async () => {
+validateOtpBtn.addEventListener("click", async () => {
   const email = (emailInput.value || "").trim();
   const code  = (otpInput.value || "").trim();
 
-  if (!code || code.length !== 6) {
+  if (!code || code.length !== 6 || !/^\d{6}$/.test(code)) {
     showToast("Indica um código de 6 dígitos.", "warn");
     return;
   }
@@ -100,8 +98,8 @@ validateOtpBtn?.addEventListener("click", async () => {
     const r = await callApi("validateOtp", { email, code });
     if (r.ok) {
       showToast("Autenticação confirmada. Bem-vindo!", "ok");
-      // TODO: redirecionar para o dashboard real
-      // window.location.href = "/dashboard.html";
+      // Redirecionar para a área de parceiros
+      setTimeout(() => (window.location.href = "parceiros.html"), 600);
     } else {
       showToast(r.message || "Código inválido.", "warn");
     }
