@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Portal de Parceiros – Mais Que Seguros</title>
-
   <link rel="icon" type="image/svg+xml" href="logo-mqs-favicon.svg" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
@@ -20,30 +19,22 @@
   </header>
 
   <main class="container">
-    <!-- VIEW: LOGIN -->
-    <section id="view-login" class="card" aria-labelledby="login-title">
-      <h2 id="login-title">Autenticação de Parceiros</h2>
+    <section id="view-login" class="card">
+      <h2>Autenticação de Parceiros</h2>
       <p>Insere o teu e-mail de parceiro para receber o código de acesso:</p>
 
       <label for="emailInput">E-mail profissional:</label>
-      <input type="email" id="emailInput" autocomplete="email" required />
-      <button id="sendOtpBtn" class="btn-primary" type="button">Enviar código de acesso</button>
+      <input type="email" id="emailInput" required />
+      <button id="sendOtpBtn" class="btn-primary">Enviar código de acesso</button>
 
-      <div id="otpSection" class="hidden" aria-live="polite">
-        <label for="otpInput">Código de validação:</label>
-        <input type="text" id="otpInput" maxlength="6" inputmode="numeric" placeholder="123456" />
-        <button id="validateOtpBtn" class="btn-primary" type="button">Validar código</button>
+      <div id="otpSection" class="hidden">
+        <label for="otpInput">Código recebido:</label>
+        <input type="text" id="otpInput" maxlength="6" placeholder="Ex: 123456" />
+        <button id="validateOtpBtn" class="btn-primary">Validar código</button>
       </div>
     </section>
 
-    <!-- VIEW: SUCESSO -->
-    <section id="view-success" class="card hidden" aria-live="polite">
-      <h2>Autenticação concluída</h2>
-      <p>Acesso autorizado para <strong id="partnerEmailBadge"></strong>.</p>
-      <p>Podes fechar esta janela ou navegar para a área de trabalho.</p>
-    </section>
-
-    <div id="toast" role="status" aria-live="polite"></div>
+    <div id="toast"></div>
   </main>
 
   <script src="script.js"></script>
