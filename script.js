@@ -1,8 +1,7 @@
 // === CONFIGURAÇÃO PRINCIPAL ===
-const BACKEND_URL =
-  "https://script.google.com/macros/s/AKfycbzBKjVRYWf1SLT8UfTKFEO-KAS1J5mezMiAFZ5TTZpykH4Cb1nV-6lbPQ_91sApniTpwg/exec";
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzBuhMRRFfXJFnrfIyaKBgD_4Dkd66n-SynmKyvX72ElSDqOHj9POx3PiOyXKf8EIIP/exec";
 
-// === UTILITÁRIOS ===
+// === FUNÇÕES DE UTILIDADE ===
 function showToast(msg, type = "ok") {
   const toast = document.getElementById("toast");
   toast.textContent = msg;
@@ -23,7 +22,7 @@ function setLoading(btn, isLoading, textDefault) {
   }
 }
 
-// === EVENTOS PRINCIPAIS ===
+// === PRINCIPAL ===
 document.addEventListener("DOMContentLoaded", () => {
   const emailInput = document.getElementById("emailInput");
   const sendOtpBtn = document.getElementById("sendOtpBtn");
@@ -31,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const otpInput = document.getElementById("otpInput");
   const validateOtpBtn = document.getElementById("validateOtpBtn");
 
-  // Permite enviar com Enter no campo de e-mail
+  // Permitir envio com Enter
   emailInput.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -39,9 +38,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // === Envio do código OTP ===
+  // === Envio do OTP ===
   sendOtpBtn.addEventListener("click", async () => {
     const email = emailInput.value.trim();
+    console.log("📧 Email submetido:", email);
 
     if (!email) {
       showToast("Por favor insere o teu e-mail profissional.", "error");
@@ -54,14 +54,16 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(BACKEND_URL, {
         method: "POST",
+        mode: "cors", // garante pedido CORS
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "sendOtp", email }),
       });
 
-      if (!response.ok) throw new Error("Falha de comunicação com o servidor");
+      console.log("🔗 Resposta bruta:", response);
+      if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
 
       const result = await response.json();
-      console.log("Resposta:", result);
+      console.log("📩 Resposta JSON:", result);
 
       if (result.success) {
         showToast("Código enviado com sucesso!", "ok");
@@ -79,14 +81,21 @@ document.addEventListener("DOMContentLoaded", () => {
         showToast(result.message || "Erro ao enviar o código.", "error");
       }
     } catch (err) {
-      console.error("Erro:", err);
-      showToast("Erro de ligação ao servidor.", "error");
+      console.error("❌ Erro de ligação:", err);
+      if (err.message.includes("CORS")) {
+        showToast(
+          "Bloqueio de segurança CORS — ativa as permissões no Apps Script (Qualquer pessoa).",
+          "error"
+        );
+      } else {
+        showToast("Erro de ligação ao servidor.", "error");
+      }
     } finally {
       setLoading(sendOtpBtn, false, "Enviar código de acesso");
     }
   });
 
-  // === Validação do código OTP ===
+  // === Validação do OTP ===
   validateOtpBtn.addEventListener("click", async () => {
     const email = emailInput.value.trim();
     const code = otpInput.value.trim();
@@ -102,24 +111,26 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(BACKEND_URL, {
         method: "POST",
+        mode: "cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "validateOtp", email, code }),
       });
 
-      if (!response.ok) throw new Error("Falha de comunicação com o servidor");
+      if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
 
       const result = await response.json();
+      console.log("📤 Resultado validação:", result);
 
       if (result.success) {
         showToast("Login autorizado! A redirecionar...", "ok");
         setTimeout(() => {
-          window.location.href = "dashboard.html"; // página seguinte
+          window.location.href = "dashboard.html";
         }, 1500);
       } else {
         showToast(result.message || "Código inválido ou expirado.", "error");
       }
     } catch (err) {
-      console.error("Erro:", err);
+      console.error("❌ Erro:", err);
       showToast("Erro de ligação ao servidor.", "error");
     } finally {
       setLoading(validateOtpBtn, false, "Validar código");
