@@ -1,6 +1,6 @@
 // ===== CONFIG =====
 const BACKEND_URL =
-  "https://script.google.com/macros/s/AKfycbwA-gJTIbYx90r-zQU0zUxFTiPIC8iItxZZPIkSqkE4iwesXtaI0otxN8jerY7rekaR/exec";
+  "https://script.google.com/macros/s/AKfycbzBuhMRRFfXJFnrfIyaKBgD_4Dkd66n-SynmKyvX72ElSDqOHj9POx3PiOyXKf8EIIP/exec";
 
 // ===== Toast =====
 function showToast(msg, type = "ok") {
