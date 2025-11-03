@@ -2,8 +2,7 @@
 import { setSession, getSession } from "./auth.js";
 
 // === CONFIGURAÇÃO PRINCIPAL ===
-const BACKEND_URL =
-  "https://script.google.com/macros/s/AKfycbzBuhMRRFfXJFnrfIyaKBgD_4Dkd66n-SynmKyvX72ElSDqOHj9POx3PiOyXKf8EIIP/exec";
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycby2RXHJvDmqfiTkEXRBPQmJEMULOlAPKs9GV8HFm6fDWtiyQnpqwTwVxRZ4b2uQYVY/exec";
 
 // === UTILITÁRIOS ===
 const $ = (sel) => document.querySelector(sel);
