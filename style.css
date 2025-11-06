@@ -1,71 +1,157 @@
-:root{
-  --bg:#f7f9fb;
-  --surface:#fff;
-  --brand-700:#0b5f35;
-  --brand-600:#0d6b3b;
-  --brand-500:#127a45;
-  --ink:#1f2428;
-  --muted:#6b7280;
-  --radius:14px;
-  --shadow:0 12px 40px rgba(0,0,0,.08);
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--ink);
+/* === Portal Parceiros MQS – Fluent Style (Microsoft-inspired) === */
+
+:root {
+  --color-primary: #1C7C54;
+  --color-primary-light: #2FA572;
+  --color-bg: #F6F9F6;
+  --color-text: #222;
+  --color-white: #fff;
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* header */
-.site-header{
-  background:linear-gradient(90deg,var(--brand-600),var(--brand-700));
-  color:#fff;
-  text-align:center;
-  padding:36px 16px;
-  box-shadow:var(--shadow);
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Roboto, system-ui, sans-serif;
 }
-.brand-centered{display:flex;flex-direction:column;align-items:center;gap:10px}
-.brand_logo{width:72px;height:auto;filter:drop-shadow(0 2px 2px rgba(0,0,0,.2))}
-.brand_title{font-size:1.8rem;margin:0;font-weight:600}
-.brand_subtitle{margin:0;opacity:.9}
 
-/* layout */
-.container{
-  min-height:calc(100vh - 160px);
-  display:flex;align-items:flex-start;justify-content:center;
-  padding:40px 16px;
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
-.card{
-  background:var(--surface);
-  border-radius:var(--radius);
-  width:min(420px,100%);
-  padding:24px 24px 28px;
-  box-shadow:var(--shadow);
-}
-.card h2{margin:0 0 8px;color:var(--brand-700)}
-.card p{margin:0 0 16px;color:var(--muted)}
-label{display:block;margin-top:12px;font-size:.95rem}
-input{
-  width:100%;padding:12px 14px;margin-top:6px;
-  border:1.5px solid #d1d5db;border-radius:12px;font-size:1rem;outline:none;
-}
-input:focus{border-color:var(--brand-600);box-shadow:0 0 0 3px rgba(13,107,59,.12)}
-.btn-primary{
-  width:100%;margin-top:16px;padding:12px 16px;border:none;border-radius:12px;
-  background:var(--brand-600);color:#fff;font-weight:600;cursor:pointer;transition:.2s;
-}
-.btn-primary:hover{background:var(--brand-700)}
-.btn-primary[disabled]{opacity:.55;cursor:not-allowed}
-.hidden{display:none}
 
-/* toast */
-.toast{
-  position:fixed;left:50%;bottom:22px;transform:translateX(-50%);
-  min-width:260px;max-width:92vw;padding:12px 16px;border-radius:12px;
-  background:#c0392b;color:#fff;box-shadow:var(--shadow);display:none;font-weight:600;
+/* === Container principal === */
+.login-container {
+  background: var(--color-white);
+  padding: 2.5rem 2.8rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  animation: fadeIn 0.4s ease;
 }
-.toast.ok{background:var(--brand-600)}
-.toast.warn{background:#b7791f}
-.toast.info{background:#2563eb}
+
+/* === Cabeçalho / logo === */
+.login-container h2 {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.logo-circle {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 1.2rem;
+  border-radius: 50%;
+  background: var(--color-white);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-circle img {
+  width: 60%;
+  height: auto;
+}
+
+/* === Formulários === */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  text-align: left;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--color-text);
+}
+
+input[type="email"],
+input[type="password"] {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  transition: 0.2s border-color;
+}
+
+input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+}
+
+button {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.25s;
+}
+
+button:hover {
+  background: var(--color-primary-light);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.25s;
+}
+
+a:hover {
+  color: var(--color-primary-light);
+}
+
+/* === Toast (mensagens) === */
+#toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #d9534f;
+  color: var(--color-white);
+  padding: 0.8rem 1.4rem;
+  border-radius: var(--radius);
+  display: none;
+  font-weight: 500;
+  animation: fadeInUp 0.3s ease;
+}
+
+#toast.show {
+  display: block;
+}
+
+/* === Animações === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Responsividade === */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 2rem;
+    width: 90%;
+  }
+}
