@@ -69,10 +69,11 @@ body {
   height: auto;
   display: block;
   margin: 0 auto;
-  transform: translateY(12%); /* 🔧 desce o logótipo visualmente dentro do círculo */
-  transition: transform 0.3s ease;
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.0);
 }
-
 
 /* === Formulários === */
 form {
