@@ -1,33 +1,59 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Portal Parceiros MQS — Login</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Parceiros MQS</title>
+  <meta name="description" content="Acesso seguro ao Portal de Parceiros Mais Que Seguros">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./logo-mqs.svg">
+  
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Reload for favicon cache (em caso de atualização do site) -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const favicon = document.querySelector("link[rel='icon']");
+      if (favicon) favicon.href = `./logo-mqs.svg?v=${Date.now()}`;
+    });
+  </script>
 </head>
+
 <body>
   <div class="login-container">
+    <!-- Logótipo -->
     <div class="logo-circle">
-      <img src="logo-mqs.svg" alt="Mais Que Seguros Logo" />
+      <img src="logo-mqs.svg" alt="Mais Que Seguros Logótipo">
     </div>
+
+    <!-- Título -->
     <h2>Portal Parceiros MQS</h2>
 
+    <!-- Formulário de Login -->
     <form id="loginForm">
       <label for="email">E-mail</label>
-      <input type="email" id="email" required />
+      <input type="email" id="email" name="email" required placeholder="teuemail@maisqueseguros.pt">
 
       <label for="password">Password</label>
-      <input type="password" id="password" required minlength="10" />
+      <input type="password" id="password" name="password" required placeholder="••••••••">
 
-      <button type="submit">Entrar</button>
-
-      <p><a href="reset.html">Esqueci-me da password</a></p>
+      <button type="submit" id="btnLogin">Entrar</button>
     </form>
 
-    <div id="toast"></div>
+    <!-- Link de recuperação -->
+    <p style="margin-top:1rem;">
+      <a href="reset.html">Esqueci-me da password</a>
+    </p>
   </div>
 
+  <!-- Toast mensagens -->
+  <div id="toast"></div>
+
+  <!-- Script de autenticação -->
+  <script src="auth.js"></script>
   <script src="script-login.js"></script>
+
 </body>
 </html>
