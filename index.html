@@ -12,7 +12,7 @@
   <!-- CSS principal -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- Reload for favicon cache (em caso de atualização do site) -->
+  <!-- Forçar reload do favicon (evita cache) -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const favicon = document.querySelector("link[rel='icon']");
@@ -34,10 +34,10 @@
     <!-- Formulário de Login -->
     <form id="loginForm">
       <label for="email">E-mail</label>
-      <input type="email" id="email" name="email" required placeholder="teuemail@maisqueseguros.pt">
+      <input type="email" id="email" name="email" required>
 
       <label for="password">Password</label>
-      <input type="password" id="password" name="password" required placeholder="••••••••">
+      <input type="password" id="password" name="password" required>
 
       <button type="submit" id="btnLogin">Entrar</button>
     </form>
@@ -51,7 +51,7 @@
   <!-- Toast mensagens -->
   <div id="toast"></div>
 
-  <!-- Script de autenticação -->
+  <!-- Scripts -->
   <script src="auth.js"></script>
   <script src="script-login.js"></script>
 
