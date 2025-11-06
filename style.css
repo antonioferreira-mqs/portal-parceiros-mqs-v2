@@ -38,41 +38,39 @@ body {
   animation: fadeIn 0.4s ease;
 }
 
-/* === Cabeçalho / logo === */
+/* === Cabeçalho / título === */
 .login-container h2 {
-  margin-top: -0.3rem; /* sobe um pouco o título */
+  margin-top: -0.3rem;
   margin-bottom: 0.8rem;
+  color: var(--color-primary);
+  font-weight: 600;
 }
 
-/* === Logótipo / Círculo === */
+/* === Logótipo / círculo === */
 .logo-circle {
   width: 90px;
   height: 90px;
-  margin: 1.8rem auto 1.8rem; /* espaçamento harmonioso acima e abaixo */
+  margin: 1.8rem auto 1.8rem;
   border-radius: 50%;
   background: var(--color-white);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease;
   position: relative;
   overflow: hidden;
+  transition: transform 0.3s ease;
 }
 
 .logo-circle:hover {
-  transform: scale(1.05); /* ligeiro aumento ao passar o rato */
+  transform: scale(1.05);
 }
 
 .logo-circle img {
   width: 65%;
   height: auto;
-  display: block;
-  margin: 0 auto;
   position: absolute;
   top: 52%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1.0);
+  transition: transform 0.3s ease;
 }
 
 /* === Formulários === */
@@ -95,11 +93,12 @@ input[type="password"] {
   border: 1px solid #ccc;
   border-radius: var(--radius);
   font-size: 0.95rem;
-  transition: 0.2s border-color;
+  transition: 0.2s border-color, 0.2s box-shadow;
 }
 
 input:focus {
   border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(28, 124, 84, 0.2);
   outline: none;
 }
 
@@ -113,11 +112,12 @@ button {
   font-weight: 600;
   cursor: pointer;
   margin-top: 0.5rem;
-  transition: background 0.25s;
+  transition: background 0.25s, transform 0.15s;
 }
 
 button:hover {
   background: var(--color-primary-light);
+  transform: translateY(-1px);
 }
 
 a {
@@ -144,6 +144,7 @@ a:hover {
   display: none;
   font-weight: 500;
   animation: fadeInUp 0.3s ease;
+  z-index: 9999;
 }
 
 #toast.show {
@@ -166,5 +167,28 @@ a:hover {
   .login-container {
     padding: 2rem;
     width: 90%;
+  }
+}
+
+/* === Favicon reload helper === */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #121212;
+    color: #f2f2f2;
+  }
+  .login-container {
+    background: #1e1e1e;
+  }
+  input[type="email"],
+  input[type="password"] {
+    background: #2b2b2b;
+    border-color: #444;
+    color: #f2f2f2;
+  }
+  input:focus {
+    border-color: var(--color-primary-light);
+  }
+  button {
+    background: var(--color-primary-light);
   }
 }
