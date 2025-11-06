@@ -1,42 +1,24 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portal de Parceiros – MQS</title>
-  <link rel="icon" type="image/svg+xml" href="logo-mqs.svg"/>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal Parceiros MQS — Login</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="site-header">
-    <div class="brand-centered">
-      <img class="brand_logo" src="logo-mqs.svg" alt="Mais Que Seguros"/>
-      <h1 class="brand_title">Portal de Parceiros</h1>
-      <p class="brand_subtitle">Mais Que Seguros</p>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="card" aria-label="Autenticação">
-      <h2>Autenticação de Parceiros</h2>
-      <p>Insere o teu e-mail de parceiro para receber o código de acesso:</p>
-
-      <label for="emailInput">E-mail profissional:</label>
-      <input id="emailInput" type="email" autocomplete="email" required />
-
-      <button id="sendOtpBtn" class="btn-primary">Enviar código de acesso</button>
-
-      <div id="otpSection" class="hidden">
-        <label for="otpInput">Código recebido:</label>
-        <input id="otpInput" type="text" inputmode="numeric" maxlength="6" />
-        <button id="validateOtpBtn" class="btn-primary">Validar código</button>
-      </div>
-    </section>
-
-    <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  </main>
-
-  <script defer src="script.js"></script>
+  <div class="login-container">
+    <h2>Portal Parceiros MQS</h2>
+    <form id="loginForm">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" required />
+      <label for="password">Password</label>
+      <input type="password" id="password" required minlength="10" />
+      <button type="submit">Entrar</button>
+      <p><a href="reset.html">Esqueci-me da password</a></p>
+    </form>
+    <div id="toast"></div>
+  </div>
+  <script src="script-login.js"></script>
 </body>
 </html>
