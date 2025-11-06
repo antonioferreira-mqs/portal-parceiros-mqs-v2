@@ -48,13 +48,18 @@ body {
 .logo-circle {
   width: 90px;
   height: 90px;
-  margin: 0 auto 1.2rem;
+  margin: 1.5rem auto 1.8rem; /* aumenta o espaçamento acima e abaixo */
   border-radius: 50%;
   background: var(--color-white);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.logo-circle:hover {
+  transform: scale(1.05); /* ligeiro aumento ao passar o rato */
 }
 
 .logo-circle img {
