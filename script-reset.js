@@ -1,5 +1,5 @@
 // === Configurações ===
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzBo0ylC8PyFUT8Mniq7e6B1WpXGB5JAoXuvt1_x4FECk0E3-JzeGnsoQbltp_oiqRR0A/exec";
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbymt_l6kczmHB8gcTpMUd9-OyF0rHvyc_c73dUdKVC9nZLA_M8zG_lt7SH00qsBTzQ7jQ/exec";
 
 // === Helpers ===
 const params = new URLSearchParams(window.location.search);
