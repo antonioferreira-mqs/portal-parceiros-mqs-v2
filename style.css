@@ -40,9 +40,8 @@ body {
 
 /* === Cabeçalho / logo === */
 .login-container h2 {
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: var(--color-primary);
+  margin-top: -0.3rem; /* sobe um pouco o título */
+  margin-bottom: 0.8rem;
 }
 
 .logo-circle {
