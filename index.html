@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal Parceiros MQS</title>
-  <meta name="description" content="Acesso seguro ao Portal de Parceiros Mais Que Seguros">
-  
+  <title>Login — Portal Parceiros MQS</title>
+  <meta name="description" content="Portal de Parceiros MQS – Acesso seguro com password.">
+
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="./logo-mqs.svg">
-  
+
   <!-- CSS principal -->
   <link rel="stylesheet" href="style.css">
 
-  <!-- Forçar reload do favicon (evita cache) -->
+  <!-- Forçar reload do favicon -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const favicon = document.querySelector("link[rel='icon']");
@@ -29,29 +29,45 @@
     </div>
 
     <!-- Título -->
-    <h2>Portal Parceiros MQS</h2>
+    <h2>Portal de Parceiros MQS</h2>
+    <p style="color:#555; margin-top:-0.2rem; margin-bottom:1rem;">
+      Aceda à sua área de parceiro de forma segura.
+    </p>
 
     <!-- Formulário de Login -->
-  <form id="loginForm">
-  <label for="email">E-mail</label>
-  <input type="email" id="email" required>
+    <form id="loginForm" autocomplete="off">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" required>
 
-  <label for="password">Password</label>
-  <input type="password" id="password" required>
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
 
-  <button type="submit">Entrar</button>
-</form>
+      <button type="submit">Entrar</button>
+    </form>
 
-<p style="margin-top: 0.8rem;">
-  <a href="#" id="forgotLink">Esqueci-me da password</a>
-</p>
+    <!-- Link de recuperação -->
+    <p style="margin-top:1rem;">
+      <a href="#" id="forgotLink">Esqueci-me da password</a>
+    </p>
 
-<div id="toast"></div>
+    <!-- Rodapé pequeno -->
+    <p style="margin-top:2rem; font-size:0.85rem; color:#999;">
+      © <span id="year"></span> Mais Que Seguros — Todos os direitos reservados.
+    </p>
+  </div>
 
+  <!-- Toast mensagens -->
+  <div id="toast"></div>
 
   <!-- Scripts -->
-  <script src="auth.js"></script>
-  <script src="script.js"></script>
+  <script>
+    // Atualiza ano automaticamente
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("year").textContent = new Date().getFullYear();
+    });
+  </script>
 
+  <!-- Script principal de login -->
+  <script src="script.js"></script>
 </body>
 </html>
