@@ -44,10 +44,11 @@ body {
   margin-bottom: 0.8rem;
 }
 
+/* === Logótipo / Círculo === */
 .logo-circle {
   width: 90px;
   height: 90px;
-  margin: 1.5rem auto 1.8rem; /* aumenta o espaçamento acima e abaixo */
+  margin: 1.8rem auto 1.8rem; /* espaçamento harmonioso acima e abaixo */
   border-radius: 50%;
   background: var(--color-white);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -55,6 +56,8 @@ body {
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .logo-circle:hover {
@@ -66,9 +69,10 @@ body {
   height: auto;
   display: block;
   margin: 0 auto;
-  position: relative;
-  top: 6px; /* 🔧 força o logo a descer ligeiramente dentro do círculo */
+  transform: translateY(12%); /* 🔧 desce o logótipo visualmente dentro do círculo */
+  transition: transform 0.3s ease;
 }
+
 
 /* === Formulários === */
 form {
