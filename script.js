@@ -1,164 +1,48 @@
-// ====== CONFIG ======
-const BACKEND_URL =
-  "https://script.google.com/macros/s/AKfycbx3VXG71YwMF2-B7zvs0jtTS_vyhcuw7P6HfTvzbTaMLNvOVQUxSZ9l0rW9qXxtC1703A/exec";
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbx3VXG71YwMF2-B7zvs0jtTS_vyhcuw7P6HfTvzbTaMLNvOVQUxSZ9l0rW9qXxtC1703A/exec";
 
-// ====== UI helpers ======
-const toastEl = document.getElementById("toast");
-function showToast(msg, type = "ok") {
-  toastEl.textContent = msg;
-  toastEl.className = `toast ${type}`;
-  toastEl.style.display = "block";
-  // torna o toast “auto-dismiss”
-  clearTimeout(showToast._t);
-  showToast._t = setTimeout(() => (toastEl.style.display = "none"), 4000);
-}
-
-function setLoading(btn, isLoading) {
-  if (!btn) return;
-  btn.disabled = !!isLoading;
-  btn.setAttribute("aria-busy", String(!!isLoading));
-}
-
-// ====== API ======
-// Evita preflight CORS (usa text/plain). Timeout robusto para não “travar” o botão.
-async function callApi(action, payload, { timeoutMs = 10000 } = {}) {
-  const body = JSON.stringify({ action, ...payload });
-
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), timeoutMs);
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
 
   try {
     const res = await fetch(BACKEND_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body,
-      signal: ctrl.signal,
-      // Não enviamos cookies nem credenciais
-      credentials: "omit",
-      cache: "no-store",
-      redirect: "follow"
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'login', email, password, ua: navigator.userAgent })
     });
+    const data = await res.json();
 
-    // Quando um antivírus bloqueia, às vezes o fetch resolve mas sem corpo válido.
-    // Se status não for 200, tentamos ler o texto para diagnóstico.
-    if (!res.ok) {
-      const txt = await res.text().catch(() => "");
-      throw new Error(`HTTP ${res.status} – ${txt || "sem detalhe"}`);
-    }
-
-    // Apps Script devolve JSON em doPost
-    return await res.json();
-  } catch (err) {
-    // Uniformiza mensagens de bloqueio por antivírus/proxy
-    const msg = String(err && err.message ? err.message : err);
-
-    if (
-      /IO_SUSPENDED|ERR_NETWORK_IO_SUSPENDED|ERR_BLOCKED_BY_CLIENT|ERR_FAILED/i.test(
-        msg
-      ) ||
-      /network.*changed/i.test(msg)
-    ) {
-      const advice =
-        "Falha de ligação. Se tiver Kaspersky/antivírus, adicione este site e script.google.com à lista de confiança.";
-      const e = new Error(advice);
-      e._isAvBlock = true;
-      throw e;
-    }
-
-    if (/AbortError/i.test(msg)) {
-      const e = new Error("Tempo de espera esgotado. Tente novamente.");
-      e._isTimeout = true;
-      throw e;
-    }
-
-    throw err;
-  } finally {
-    clearTimeout(t);
+    if (data.ok) {
+      setSession(email);
+      window.location = 'parceiros.html';
+    } else if (data.code === 'NO_PASSWORD') {
+      if (confirm('Ainda não tem password. Pretende criar agora?')) {
+        const pw = prompt('Defina uma nova password (mínimo 10 caracteres):');
+        if (pw && pw.length >= 10) {
+          const create = await fetch(BACKEND_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'createUser', email, password: pw })
+          });
+          const r = await create.json();
+          showToast(r.message);
+        } else showToast('Password demasiado curta.');
+      }
+    } else showToast(data.message || 'Erro no login.');
+  } catch {
+    showToast('Falha de ligação. Verifique a Internet ou antivírus.');
   }
+});
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'show';
+  setTimeout(() => (t.className = ''), 3500);
 }
 
-// ====== App ======
-const emailInput     = document.getElementById("emailInput");
-const sendOtpBtn     = document.getElementById("sendOtpBtn");
-const otpSection     = document.getElementById("otpSection");
-const otpInput       = document.getElementById("otpInput");
-const validateOtpBtn = document.getElementById("validateOtpBtn");
-
-// Enter no e-mail => clicar no botão
-emailInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    sendOtpBtn.click();
-  }
-});
-
-sendOtpBtn.addEventListener("click", async () => {
-  const email = (emailInput.value || "").trim();
-
-  if (!email) {
-    showToast("Indica o teu e-mail profissional.", "warn");
-    return;
-  }
-
-  setLoading(sendOtpBtn, true);
-
-  try {
-    const r = await callApi("sendOtp", { email });
-
-    if (r && r.ok) {
-      showToast("Código enviado para o e-mail.", "ok");
-      otpSection.classList.remove("hidden");
-      otpInput.value = "";
-      // Foco no campo OTP para o utilizador introduzir logo o código
-      setTimeout(() => otpInput.focus(), 50);
-    } else if (r && r.code === "UNAUTHORIZED") {
-      otpSection.classList.add("hidden");
-      showToast("Email não autorizado para aceder ao portal.", "warn");
-    } else {
-      otpSection.classList.add("hidden");
-      showToast(r?.message || "Não foi possível enviar o código.", "warn");
-    }
-  } catch (err) {
-    console.error("Erro no fetch:", err);
-    showToast(err?._isAvBlock ? err.message : "Falha de ligação. Verifica a Internet.", "error");
-  } finally {
-    setLoading(sendOtpBtn, false);
-  }
-});
-
-// Enter no OTP => validar
-otpInput?.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    validateOtpBtn.click();
-  }
-});
-
-validateOtpBtn?.addEventListener("click", async () => {
-  const email = (emailInput.value || "").trim();
-  const code  = (otpInput.value || "").trim();
-
-  if (!code || code.length !== 6) {
-    showToast("Indica um código de 6 dígitos.", "warn");
-    return;
-  }
-
-  setLoading(validateOtpBtn, true);
-
-  try {
-    const r = await callApi("validateOtp", { email, code });
-
-    if (r && r.ok) {
-      showToast("Autenticação confirmada. A entrar…", "ok");
-      // Aqui podes guardar sessão e redirecionar
-      // window.location.href = "parceiros.html";
-    } else {
-      showToast(r?.message || "Código inválido ou expirado.", "warn");
-    }
-  } catch (err) {
-    console.error("Erro no fetch:", err);
-    showToast(err?._isAvBlock ? err.message : "Falha de ligação. Verifica a Internet.", "error");
-  } finally {
-    setLoading(validateOtpBtn, false);
-  }
-});
+function setSession(email, ttlMs = 60 * 60 * 1000) {
+  const expires = Date.now() + ttlMs;
+  localStorage.setItem('session', JSON.stringify({ email, expires }));
+}
