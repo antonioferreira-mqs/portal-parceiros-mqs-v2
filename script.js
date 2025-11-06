@@ -1,6 +1,6 @@
 // ====== CONFIG ======
 const BACKEND_URL =
-  "https://script.google.com/macros/s/AKfycbx09NFICUUQGva7euQ7I4KzJp3AdnEeBJBBEd_ZklmIxp2t_RHdXnSuBPF2zT9hxg_B/exec";
+  "https://script.google.com/macros/s/AKfycbx3VXG71YwMF2-B7zvs0jtTS_vyhcuw7P6HfTvzbTaMLNvOVQUxSZ9l0rW9qXxtC1703A/exec";
 
 // ====== UI helpers ======
 const toastEl = document.getElementById("toast");
