@@ -1,22 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Recuperar Password — Portal MQS</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="description" content="Recuperação de password do Portal de Parceiros MQS">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./logo-mqs.svg">
+  
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Forçar reload do favicon -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const favicon = document.querySelector("link[rel='icon']");
+      if (favicon) favicon.href = `./logo-mqs.svg?v=${Date.now()}`;
+    });
+  </script>
 </head>
+
 <body>
   <div class="login-container">
+    <!-- Logótipo -->
     <div class="logo-circle">
-      <img src="logo-mqs.svg" alt="Mais Que Seguros Logo" />
+      <img src="logo-mqs.svg" alt="Mais Que Seguros Logótipo">
     </div>
+
+    <!-- Título -->
     <h2>Recuperar Password</h2>
 
+    <!-- Conteúdo dinâmico -->
     <div id="formContainer"></div>
-    <div id="toast"></div>
   </div>
 
+  <!-- Toast mensagens -->
+  <div id="toast"></div>
+
+  <!-- Script -->
   <script src="script-reset.js"></script>
 </body>
 </html>
