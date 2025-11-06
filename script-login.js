@@ -1,5 +1,5 @@
 // === CONFIGURAÇÃO ===
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycbx3VXG71YwMF2-B7zvs0jtTS_vyhcuw7P6HfTvzbTaMLNvOVQUxSZ9l0rW9qXxtC1703A/exec";
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzBo0ylC8PyFUT8Mniq7e6B1WpXGB5JAoXuvt1_x4FECk0E3-JzeGnsoQbltp_oiqRR0A/exec";
 
 // === HELPERS ===
 const toast = document.getElementById("toast");
