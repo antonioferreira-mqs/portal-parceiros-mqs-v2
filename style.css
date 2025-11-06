@@ -64,9 +64,11 @@ body {
 .logo-circle img {
   width: 65%;
   height: auto;
-  transform: translateY(14%); /* 🔧 desce o logótipo dentro do círculo */
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  top: 6px; /* 🔧 força o logo a descer ligeiramente dentro do círculo */
 }
-
 
 /* === Formulários === */
 form {
