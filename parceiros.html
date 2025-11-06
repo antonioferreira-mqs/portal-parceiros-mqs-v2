@@ -1,48 +1,64 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Área de Parceiros – MQS</title>
-  <link rel="icon" type="image/svg+xml" href="logo-mqs-favicon.svg" />
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header class="site-header">
-    <div class="brand-centered">
-      <img class="brand_logo" src="logo-mqs.svg" alt="Mais Que Seguros" />
-      <h1 class="brand_title">Área de Parceiros</h1>
-      <p class="brand_subtitle">Mais Que Seguros</p>
-    </div>
-  </header>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área de Parceiros — MQS</title>
+  <meta name="description" content="Área privada do Portal de Parceiros MQS. Aceda a conteúdos exclusivos e informações da sua conta.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./logo-mqs.svg">
 
-  <main class="container">
-    <section class="card">
-      <h2>Bem-vindo</h2>
-      <p id="partnerEmail" class="muted"></p>
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="style.css">
 
-      <!-- Conteúdo protegido aqui -->
-      <p>Conteúdo reservado a parceiros autorizados.</p>
-
-      <button id="logoutBtn" class="btn-primary" style="margin-top:18px">Sair</button>
-    </section>
-  </main>
-
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
-  <script type="module">
-    import { requireAuth, clearSession, getSession } from "./auth.js";
-
-    // Bloqueia acesso se não tiver sessão (redireciona para index.html)
-    const ses = requireAuth({ redirectTo: "index.html" });
-    if (ses) {
-      document.getElementById("partnerEmail").textContent = `Sessão ativa: ${ses.email}`;
-    }
-
-    document.getElementById("logoutBtn").addEventListener("click", () => {
-      clearSession();
-      window.location.href = "index.html";
+  <!-- Forçar reload do favicon -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const favicon = document.querySelector("link[rel='icon']");
+      if (favicon) favicon.href = `./logo-mqs.svg?v=${Date.now()}`;
     });
   </script>
+</head>
+
+<body>
+  <div class="login-container" style="text-align: center;">
+    <!-- Logótipo -->
+    <div class="logo-circle">
+      <img src="logo-mqs.svg" alt="Mais Que Seguros Logótipo">
+    </div>
+
+    <!-- Cabeçalho -->
+    <h2>Área de Parceiros MQS</h2>
+    <p>Bem-vindo, <strong><span id="userEmail"></span></strong> 👋</p>
+
+    <hr style="margin: 1.5rem 0; border: none; border-top: 1px solid rgba(255,255,255,0.1);">
+
+    <!-- Conteúdo interno -->
+    <div id="partnerContent" style="text-align: left;">
+      <h3>📊 Painel do Parceiro</h3>
+      <p>Aqui poderá aceder a relatórios, ficheiros e informações exclusivas.</p>
+
+      <ul style="line-height: 1.8;">
+        <li>Ver produção mensal</li>
+        <li>Consultar comissões</li>
+        <li>Submeter novos leads</li>
+        <li>Atualizar dados de cliente</li>
+      </ul>
+
+      <p style="margin-top: 2rem; color: #aaa; font-size: 0.9rem;">
+        Esta área é exclusiva a parceiros MQS. O acesso é controlado e monitorizado.
+      </p>
+    </div>
+
+    <!-- Botão de logout -->
+    <button id="logoutBtn" style="margin-top: 2rem;">Terminar sessão</button>
+  </div>
+
+  <!-- Toast mensagens -->
+  <div id="toast"></div>
+
+  <!-- Script de autenticação -->
+  <script src="auth.js"></script>
 </body>
 </html>
