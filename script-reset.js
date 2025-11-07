@@ -1,5 +1,5 @@
 // === CONFIGURAÇÃO ===
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycbxlkCSYIkMtrac8HnHfTxxJbs_WhRynkkGBC2M2I-Z3bZVRMW7lf3MJOvFOM85jdlFICw/exec";
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycby20udDqswAeVz8wpyS0oH7Y_G0cLQtx-uKzPXBx_hQ-j0Vuaf8fk1VqUvICC6DpIn-cQ/exec";
 
 // === ELEMENTOS ===
 const container = document.getElementById("formContainer");
