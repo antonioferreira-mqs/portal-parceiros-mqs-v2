@@ -16,6 +16,12 @@ function showToast(msg, success = false) {
 // === Verifica se existe token na URL ===
 const params = new URLSearchParams(window.location.search);
 const token = params.get("token");
+const presetEmail = sessionStorage.getItem("mqs_pending_email") || params.get("email");
+const fromFirstAccess = params.get("from") === "first-access";
+
+if (presetEmail) {
+  sessionStorage.removeItem("mqs_pending_email");
+}
 
 // === 1️⃣ Modo A: Pedido de recuperação de password ===
 if (!token) {
@@ -24,12 +30,27 @@ if (!token) {
       <label for="email">E-mail</label>
       <input type="email" id="email" required>
       <button type="submit">Enviar link de recuperação</button>
+      ${
+        fromFirstAccess
+          ? '<p class="helper-text">Primeiro acesso identificado. Confirme o seu e-mail para receber o link de ativação.</p>'
+          : ""
+      }
     </form>
   `;
 
+  const emailInput = document.getElementById("email");
+  if (presetEmail) {
+    emailInput.value = presetEmail;
+  }
+
   document.getElementById("requestForm").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const email = document.getElementById("email").value.trim();
+    const email = emailInput.value.trim();
+
+    if (!email) {
+      showToast("Indique o seu e-mail.");
+      return;
+    }
 
     try {
       const res = await fetch(BACKEND_URL, {
@@ -38,7 +59,7 @@ if (!token) {
         body: JSON.stringify({ action: "requestReset", email }),
       });
       const data = await res.json();
-      showToast(data.message, data.ok);
+      showToast(data.message || "Pedido concluído.", data.ok);
     } catch (err) {
       showToast("Erro de ligação ao servidor.");
     }
@@ -59,6 +80,11 @@ else {
     e.preventDefault();
     const newPassword = document.getElementById("newPassword").value;
 
+    if (!newPassword || newPassword.length < 8) {
+      showToast("A password deve ter pelo menos 8 caracteres.");
+      return;
+    }
+
     try {
       const res = await fetch(BACKEND_URL, {
         method: "POST",
@@ -69,9 +95,9 @@ else {
       const data = await res.json();
       if (data.ok) {
         showToast("Password atualizada com sucesso!", true);
-        setTimeout(() => window.location.href = "index.html", 2000);
+        setTimeout(() => (window.location.href = "index.html"), 2000);
       } else {
-        showToast(data.message);
+        showToast(data.message || "Não foi possível atualizar a password.");
       }
     } catch (err) {
       showToast("Erro ao redefinir password.");
