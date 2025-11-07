@@ -32,8 +32,18 @@ form.addEventListener("submit", async (e) => {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
-  if (!email || !password) {
-    showToast("Por favor, preencha todos os campos.");
+  if (!email) {
+    showToast("Indique o seu e-mail.");
+    return;
+  }
+
+  if (!password) {
+    showToast("Introduza a sua password.");
+    return;
+  }
+
+  if (password.length < 8) {
+    showToast("A password deve ter pelo menos 8 caracteres.");
     return;
   }
 
@@ -50,17 +60,14 @@ form.addEventListener("submit", async (e) => {
 
     // === Respostas possíveis ===
     if (data.ok) {
-      showToast("Login com sucesso!", true);
+      const successMessage =
+        data.message ||
+        (data.status === "PASSWORD_CREATED"
+          ? "Password criada com sucesso!"
+          : "Login com sucesso!");
+      showToast(successMessage, true);
       setSession(email); // guarda sessão local
       setTimeout(() => (window.location.href = "parceiros.html"), 1000);
-    } else if (data.status === "NO_PASSWORD") {
-      // Primeiro acesso — encaminhar utilizador para recuperação manual
-      sessionStorage.setItem("mqs_pending_email", email);
-      showToast(
-        "Primeiro acesso detetado. Irá ser redirecionado para definir a password.",
-        true
-      );
-      setTimeout(() => (window.location.href = "reset.html?from=first-access"), 1500);
     } else {
       showToast(data.message || "Falha no login.");
     }
