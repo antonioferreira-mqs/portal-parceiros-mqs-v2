@@ -17,7 +17,6 @@ function showToast(msg, success = false) {
 const params = new URLSearchParams(window.location.search);
 const token = params.get("token");
 const presetEmail = sessionStorage.getItem("mqs_pending_email") || params.get("email");
-const fromFirstAccess = params.get("from") === "first-access";
 
 if (presetEmail) {
   sessionStorage.removeItem("mqs_pending_email");
@@ -30,11 +29,6 @@ if (!token) {
       <label for="email">E-mail</label>
       <input type="email" id="email" required>
       <button type="submit">Enviar link de recuperação</button>
-      ${
-        fromFirstAccess
-          ? '<p class="helper-text">Primeiro acesso identificado. Confirme o seu e-mail para receber o link de ativação.</p>'
-          : ""
-      }
     </form>
   `;
 
