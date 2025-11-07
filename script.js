@@ -5,7 +5,7 @@
  */
 
 // === CONFIGURAÇÃO ===
-const BACKEND_URL = "https://script.google.com/macros/s/AKfycby_EyCT2Thx3EexUzfbxZNO0zLIeC5SO7EN1yEYup_QmxaRik1G1c0MupwSfqHEdgRjIg/exec";
+const BACKEND_URL = "https://script.google.com/macros/s/AKfycbylru1rRon1qq1FeNyWWju7rhHcmo4-Vs6XqRxooyzOjQW5saqdU0Za4jOUBfD5cc08rg/exec";
 
 // === ELEMENTOS ===
 const form = document.getElementById("loginForm");
